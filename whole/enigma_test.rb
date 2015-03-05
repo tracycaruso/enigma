@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './enigma'
@@ -75,7 +77,7 @@ class EnigmaTest < Minitest::Test
 
   def test_date_equals_today
     enigma = Enigma.new
-    assert_equal "30415", enigma.date_converter("030415")
+    assert_equal "30515", enigma.date_converter("030515")
   end
   #
   # def test_date_equals_today

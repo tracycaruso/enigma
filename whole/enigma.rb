@@ -14,14 +14,7 @@ class Enigma
     encryptor.join
   end
 
-  def rotation(encryption_key)
-    rotations = {}
-    rotators = [:a, :b, :c, :d]
-    rotators.each_with_index do|item,index|
-      rotations[item] = encryption_key[index..index + 1].to_i
-    end
-    rotations
-  end
+
 
   def date_converter(date)
    date = Time.new
@@ -56,6 +49,10 @@ class Enigma
     end
     offsets
   end
+
+
+  def full_rotation_calc
+
 
   end
 
