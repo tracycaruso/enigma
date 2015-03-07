@@ -13,8 +13,9 @@ class DateGeneratorTest < Minitest::Test
   end
 
   def test_date_equals_today
+    skip
     date = DateGenerator.new
-    assert_equal "30515", date.date_converter("030515")
+    assert_equal "30515", date.date_converter("0305jh")
   end
 
   def test_it_responds_to_date_squared
@@ -45,5 +46,11 @@ class DateGeneratorTest < Minitest::Test
   def test_different_date_squared_is_to_4_digit_array
     date = DateGenerator.new
     assert_equal [2, 2, 2, 5], date.date_splitter(925072225)
+  end
+
+  def test_date_code_returns_4_digit_array
+    date = DateGenerator.new
+    assert_equal 4, date.date_code_generator.length
+    assert_equal Array, date.date_code_generator.class
   end
 end

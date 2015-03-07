@@ -1,8 +1,5 @@
 class RotationCalculator
 
-  def initialize(encryption_key)
-  end
-
   def rotation(encryption_key)
     rotations = {}
     rotators = [:a, :b, :c, :d]
