@@ -9,21 +9,25 @@ class RotatorTest < Minitest::Test
   end
 
   def test_it_responds_to_char_map
+    skip
     rotator = Rotator.new
     assert rotator.respond_to?(:char_map)
   end
 
   def test_character_map_is_an_array
+    skip
    rotator = Rotator.new
    assert_equal Array, rotator.char_map.class
   end
 
   def test_character_map_has_39_characters
+    skip
    rotator = Rotator.new
    assert_equal 39, rotator.char_map.length
   end
 
   def test_it_adds_rotations_and_offsets
+    skip
     rotator = Rotator.new
     offsets = {:a=>9, :b=>2, :c=>2, :d=>5}
     rotations = {:a=>12, :b=>23, :c=>34, :d=>45}

@@ -1,22 +1,25 @@
 class DateGenerator
 
-  def date_code_generator
-    date_splitter(date_squared(date_converter))
+  attr_reader :date
+
+  def initialize(date = creator)
+    @date = date.chars
   end
 
-
-  def date_converter
-   date = Time.new.strftime("%m%d%y")
-   date.slice(1..5) if date.start_with?("0")
+  def creator
+    date = Time.new.strftime("%m%d%y")
   end
 
-  def date_squared(date)
-    date.to_i ** 2
+  def square_number
+    date.join.to_i ** 2
   end
 
-  def date_splitter(date)
-    date = date.to_s.split("").map!{|e| e.to_i}
-    date.last(4)
+  def split_number(date)
+    date.to_s.chars.last(4).map(&:to_i)
+  end
+
+  def key_generator
+    split_number(square_number)
   end
 
 end

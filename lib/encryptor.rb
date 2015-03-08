@@ -1,29 +1,28 @@
+#separate character methods and put in new class? Too many dependencies?
+
 require_relative './rotator.rb'
 class Encryptor
 
-  attr_reader :input
+  attr_reader :rotator, :chars, :number_of_chars
 
   def initialize
-    @total_rotation = Rotator.new
-    @total_rotation = @total_rotation.total_rotation_values
-    @chars =   [*("a".."z"), *("0".."9"), " ", ".", ","]
+    @rotator          =   Rotator.new
+    @chars            =   [*("a".."z"), *("0".."9"), " ", ".", ","]
+    @number_of_chars  =   @chars.length
   end
 
   def encryptor(input)
-    input.each_index do |i|
-      case
-      when i % 4 == 0 then input[i] = @chars[(@chars.index(input[i]) + @total_rotation[:a]) % 39]
-      when i % 4 == 1 then input[i] = @chars[(@chars.index(input[i]) + @total_rotation[:b]) % 39]
-      when i % 2 == 0 then input[i] = @chars[(@chars.index(input[i]) + @total_rotation[:c]) % 39]
-      when i % 2 == 1 then input[i] = @chars[(@chars.index(input[i]) + @total_rotation[:d]) % 39]
-      end
+    input.each_with_index do |letter, index|
+      input[index] = chars[new_character_index(letter, index)]
     end
   end
 
+  def new_character_index(letter, index)
+   (character_location(letter) + rotator.rotation_value(index)) % number_of_chars
+  end
+
+  def character_location(input)
+    chars.index(input)
+  end
 
 end
-
-
-tester = Encryptor.new
-# print tester.encryptor(["a", "b", "c", "d", "."])
-print tester.encryptor([".", ".", "e", "n", "d", ".", "."])

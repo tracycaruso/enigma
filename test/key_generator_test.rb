@@ -7,6 +7,11 @@ class KeyGeneratorTest < Minitest::Test
    assert KeyGenerator.new
   end
 
+  def test_key_generator_is_initialized_with_default_key
+    key = KeyGenerator.new
+    assert_equal 5, key.key.length
+  end
+
   def test_it_responds_to_encryption_generator
     key = KeyGenerator.new
     assert key.respond_to?(:encryption_generator)

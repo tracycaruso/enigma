@@ -1,15 +1,12 @@
 class KeyGenerator
+  attr_reader :key
 
-  def initialize(key = nil)
-    @key = key
+  def initialize(key = encryption_generator)
+    @key = key.chars.map(&:to_i)
   end
-
 
   def encryption_generator
-    (1..5).map{ |n| n = rand(0..9)}
-    # @key = encryptor.join if !@key
+    rand(0..9.0).to_s.slice(2..6)
   end
-
-
 
 end
