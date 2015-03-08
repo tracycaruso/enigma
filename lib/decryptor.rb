@@ -33,4 +33,4 @@ end
 
 
 tester = Decryptor.new
-print tester.decryptor(["p", "r", "2", "j", "i", "t", "t", "2", "e", "r", "2", "k", " ", "r", "g", "d", "o", " ", "g", "g", "f", "o", "l", ",", "i", "6", "x", "d", "t", "v"])
+print tester.decryptor(["4", "q", "e", "s", "b", "7", "h", "v", "7", "7", "z", "4", "9", "p", "o", "s", "9", "b", "e", "k", "9", "a", "e", "l", "d", "q", "0", "o", "a", "c", "s", "s", "0", "p"] )

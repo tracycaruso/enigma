@@ -7,13 +7,18 @@ class Rotator
   attr_reader :total_rotation, :offsets, :rotations, :secret_key
 
   def initialize
-    key_generator   =   KeyGenerator.new('41521')
-    date            =   DateGenerator.new('020315')
-    rotation_calc   =   RotationCalculator.new
-    offset_calc     =   OffsetCalculator.new
+    key_generator   =   KeyGenerator.new('41521')#if you dont pass a value it will generate todays date
     @secret_key     =   key_generator.key
 
-    @rotations      =   rotation_calc.rotation(key_generator.key)
+    date            =   DateGenerator.new('020315') #if you dont pass a value it will generate random key
+    date_key        =   date.date_generator
+
+
+    rotation_calc   =   RotationCalculator.new
+    offset_calc     =   OffsetCalculator.new
+
+
+    @rotations      =   rotation_calc.rotation(@secret_key)
     @offsets        =   offset_calc.offset_generator(date.key_generator)#[9, 2, 2, 5])
   end
 
@@ -34,3 +39,5 @@ class Rotator
   end
 
 end
+
+rotate = Rotator.new

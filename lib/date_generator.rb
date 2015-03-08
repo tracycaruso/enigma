@@ -6,7 +6,7 @@ class DateGenerator
     @date = date.chars
   end
 
-  def key_generator
+  def date_generator
     split_number(square_number)
   end
 
@@ -23,6 +23,3 @@ class DateGenerator
   end
 
 end
-
-
-#date.key_generator to access date
