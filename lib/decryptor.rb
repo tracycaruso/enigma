@@ -13,6 +13,7 @@ class Decryptor
     input.each_with_index do |letter, position|
       input[position] = chars[replacement_character(letter, position)]
     end
+    "Decrypted Message : #{input.join}\n"
   end
 
   def replacement_character(letter, position)
@@ -24,8 +25,12 @@ class Decryptor
     chars.index(letter)
   end
 
+  def keycrack
+   "Secret Key : #{rotator.secret_key}\n"
+  end
+
 end
 
 
 tester = Decryptor.new
-puts tester.decryptor(["l", "s", "r", "3"])
+print tester.decryptor(["p", "r", "2", "j", "i", "t", "t", "2", "e", "r", "2", "k", " ", "r", "g", "d", "o", " ", "g", "g", "f", "o", "l", ",", "i", "6", "x", "d", "t", "v"])

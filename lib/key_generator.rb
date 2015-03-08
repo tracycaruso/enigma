@@ -2,7 +2,7 @@ class KeyGenerator
   attr_reader :key
 
   def initialize(key = encryption_generator)
-    @key = key.chars.map(&:to_i)
+    @key = key
   end
 
   def encryption_generator

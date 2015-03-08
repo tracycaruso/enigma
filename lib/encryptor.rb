@@ -15,18 +15,24 @@ class Encryptor
     input.each_with_index do |letter, position|
       input[position] = chars[replacement_character(letter, position)]
     end
+    "Encrypted Message : #{input.join}\n"
   end
 
-  def replacement_character(letter, position)
-    current_rotation = rotator.rotation_value(position)
-    (character_location(letter) + current_rotation) % number_of_chars
+  def replacement_character(current_letter, letter_position)
+    current_rotation = rotator.rotation_value(letter_position)
+    (char_map_location(current_letter) + current_rotation) % number_of_chars
   end
 
-  def character_location(letter)
+  def char_map_location(letter)
     chars.index(letter)
+  end
+
+  def keycrack
+   "Secret Key : #{rotator.secret_key}\n"
   end
 
 end
 
 tester = Encryptor.new
-print tester.encryptor(["a", "b", "c", "d", "."])
+print tester.keycrack
+print tester.encryptor( ["r", "u", "b", "y", "r", "u", "b", "y"] )

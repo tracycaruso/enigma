@@ -6,12 +6,12 @@ class DateGenerator
     @date = date.chars
   end
 
-  def creator
-    date = Time.new.strftime("%m%d%y")
-  end
-
   def key_generator
     split_number(square_number)
+  end
+
+  def creator
+    date = Time.new.strftime("%m%d%y")
   end
 
   def square_number
@@ -23,3 +23,6 @@ class DateGenerator
   end
 
 end
+
+
+#date.key_generator to access date
