@@ -7,13 +7,14 @@ class Rotator
   attr_reader :total_rotation, :offsets, :rotations
 
   def initialize
-    secret_key      =   KeyGenerator.new
+    key_generator   =   KeyGenerator.new
     rotation_calc   =   RotationCalculator.new
     date            =   DateGenerator.new
     offset_calc     =   OffsetCalculator.new
+    secret_key      =   key_generator.encryption_generator
 
-    @rotations      =   rotation_calc.rotation("41521")#secret_key.encryption_generator)
-    @offsets        =   offset_calc.offset_generator( [9, 2, 2, 5])#date.date_code_generator)
+    @rotations      =   rotation_calc.rotation(secret_key)#"41521"
+    @offsets        =   offset_calc.offset_generator(date.key_generator)#[9, 2, 2, 5])
   end
 
   def total_rotation_values
@@ -31,5 +32,6 @@ class Rotator
     when input % 2 == 1 then total_rotation[:d]
     end
   end
+
 
 end

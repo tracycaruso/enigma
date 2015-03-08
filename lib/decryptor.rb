@@ -10,21 +10,22 @@ class Decryptor
   end
 
   def decryptor(input)
-    input.each_with_index do |letter, index|
-      input[index] = chars[new_character_index(letter, index)]
+    input.each_with_index do |letter, position|
+      input[position] = chars[replacement_character(letter, position)]
     end
   end
 
-  def new_character_index(letter, index)
-   (character_location(letter) - rotator.rotation_value(index)) % number_of_chars
+  def replacement_character(letter, position)
+    current_rotation = rotator.rotation_value(position)
+    (character_location(letter) - current_rotation) % number_of_chars
   end
 
-  def character_location(input)
-    chars.index(input)
+  def character_location(letter)
+    chars.index(letter)
   end
 
 end
 
 
-# tester = Decryptor.new
-# print tester.decryptor(["l", "s", "r", "3"])
+tester = Decryptor.new
+puts tester.decryptor(["l", "s", "r", "3"])

@@ -12,17 +12,21 @@ class Encryptor
   end
 
   def encryptor(input)
-    input.each_with_index do |letter, index|
-      input[index] = chars[new_character_index(letter, index)]
+    input.each_with_index do |letter, position|
+      input[position] = chars[replacement_character(letter, position)]
     end
   end
 
-  def new_character_index(letter, index)
-   (character_location(letter) + rotator.rotation_value(index)) % number_of_chars
+  def replacement_character(letter, position)
+    current_rotation = rotator.rotation_value(position)
+    (character_location(letter) + current_rotation) % number_of_chars
   end
 
-  def character_location(input)
-    chars.index(input)
+  def character_location(letter)
+    chars.index(letter)
   end
 
 end
+
+tester = Encryptor.new
+print tester.encryptor(["a", "b", "c", "d", "."])
