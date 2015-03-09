@@ -1,50 +1,35 @@
 require_relative 'test_helper'
 require_relative '../lib/rotator'
 
-
 class RotatorTest < Minitest::Test
+  attr_reader :rotator
+
+  def setup
+    @rotator = Rotator.new(12345, 110815)
+  end
 
   def test_it_exists
-   assert Rotator.new
-  end
-
-  def test_it_responds_to_char_map
-    skip
-    rotator = Rotator.new
-    assert rotator.respond_to?(:char_map)
-  end
-
-  def test_character_map_is_an_array
-    skip
-   rotator = Rotator.new
-   assert_equal Array, rotator.char_map.class
-  end
-
-  def test_character_map_has_39_characters
-    skip
-   rotator = Rotator.new
-   assert_equal 39, rotator.char_map.length
+    assert rotator
   end
 
   def test_it_adds_rotations_and_offsets
-    skip
-    rotator = Rotator.new
-    offsets = {:a=>9, :b=>2, :c=>2, :d=>5}
-    rotations = {:a=>12, :b=>23, :c=>34, :d=>45}
-    result = {:a=>21, :b=>25, :c=>36, :d=>50}
-    assert_equal result, rotator.total_rotation_values(rotations, offsets)
+    result = {:a=>16, :b=>25, :c=>36, :d=>50}
+    assert_equal result, rotator.total_rotation_values
   end
 
-  def test_it_rotates_letters
-    #string[0] = c[c.index('a') + 50 % 39] -> l
-    #string[1] = c[c.index('b') + 17 % 39] -> s
-    #string[2] = c[c.index('c') + 54 % 39] -> r
-    #string[3] = c[c.index('d') + 26 % 39] -> 3
-
-
-    # rotator = Rotator.new
-    # assert_equal [l], rotator.rotate
+  def test_it_returns_the_a_rotation_for_index_0
+    assert_equal 16, rotator.rotation_value(0)
   end
 
+  def test_it_returns_the_b_rotation_for_index_1
+    assert_equal 25, rotator.rotation_value(1)
+  end
 
+  def test_it_returns_the_c_rotation_for_index_2
+    assert_equal 36, rotator.rotation_value(2)
+  end
+
+  def test_it_returns_the_d_rotation_for_index_3
+    assert_equal 50, rotator.rotation_value(3)
+  end
 end

@@ -1,25 +1,14 @@
-require_relative './key_generator'
-require_relative './rotation_calculator'
-require_relative './date_generator'
-require_relative './offset_calculator'
+require_relative 'rotation_calculator'
+require_relative 'offset_calculator'
+
 class Rotator
+  attr_reader :offsets, :rotations
 
-  attr_reader :total_rotation, :offsets, :rotations, :secret_key
-
-  def initialize
-    key_generator   =   KeyGenerator.new('41521')#if you dont pass a value it will generate todays date
-    @secret_key     =   key_generator.key
-
-    date            =   DateGenerator.new('020315') #if you dont pass a value it will generate random key
-    date_key        =   date.date_generator
-
-
-    rotation_calc   =   RotationCalculator.new
-    offset_calc     =   OffsetCalculator.new
-
-
-    @rotations      =   rotation_calc.rotation(@secret_key)
-    @offsets        =   offset_calc.offset_generator(date.key_generator)#[9, 2, 2, 5])
+  def initialize(key, date)
+    @key       = key
+    @date      = date
+    @rotations = RotationCalculator.new.rotation(@key.to_s)
+    @offsets   = OffsetCalculator.new(@date).offsets
   end
 
   def total_rotation_values
@@ -37,7 +26,4 @@ class Rotator
     when letter_position % 2 == 1 then total_rotation[:d]
     end
   end
-
 end
-
-rotate = Rotator.new
