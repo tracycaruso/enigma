@@ -1,25 +1,27 @@
-#does crack go here too?
 require_relative './rotator.rb'
-class Engima #CharacterSwapper
 
-  attr_reader :rotator, :chars, :number_of_chars
+class Enigma
+  attr_reader :message, :rotator, :chars, :number_of_chars, :lines
 
-  def initialize#(key, date) optional arguments?
-    @rotator          =   Rotator.new#(key, date)
-    @chars            =   [*("a".."z"), *("0".."9"), " ", ".", ","]
-    @number_of_chars  =   @chars.length
+  def initialize(message, rotator)
+    @message          =  message
+    @rotator          =  rotator
+    @chars            =  [*("a".."z"), *("0".."9"), " ", ".", ","]
+    @number_of_chars  =  @chars.length
   end
 
-  def encrypt(input)
-    input.each_with_index do |letter, position|
-      input[position] = chars[rotate_forward(letter, position)]
+  def encrypt
+    encrypted = message.chars.map.with_index do |letter, position|
+      chars[rotate_forward(letter, position)]
     end
+    encrypted.join
   end
 
-  def decrypt(input)
-    input.each_with_index do |letter, position|
-      input[position] = chars[rotate_backward(letter, position)]
+  def decrypt
+    decrypted = message.chars.map.with_index do |letter, position|
+      chars[rotate_backward(letter, position)]
     end
+    decrypted.join
   end
 
   private
@@ -37,14 +39,4 @@ class Engima #CharacterSwapper
   def char_map_location(letter)
     chars.index(letter)
   end
-
-  def keycrack
-   "Secret Key : #{rotator.secret_key}\n"
-  end
-
 end
-
-
-testing  = Engima.new
-print testing.encrypt(["a", "b", "c", "d"])
-print testing.decrypt(["l", "s", "r", "3"])
