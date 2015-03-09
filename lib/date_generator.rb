@@ -1,25 +1,7 @@
 class DateGenerator
-
-  attr_reader :date
-
-  def initialize(date = creator)
-    @date = date.chars
+  # Is it reasonable to have this logic elsewhere?
+  # For example combining this with the KeyGenerator
+  def generate_date
+    Time.new.strftime("%m%d%y").to_i
   end
-
-  def date_generator
-    split_number(square_number)
-  end
-
-  def creator
-    date = Time.new.strftime("%m%d%y")
-  end
-
-  def square_number
-    date.join.to_i ** 2
-  end
-
-  def split_number(date_squared)
-    date_squared.to_s.chars.last(4).map(&:to_i)
-  end
-
 end
