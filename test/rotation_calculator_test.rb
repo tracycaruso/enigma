@@ -2,7 +2,6 @@ require_relative 'test_helper'
 require_relative '../lib/rotation_calculator'
 
 class RotationCalculatorTest < Minitest::Test
-
   def test_it_exists
    assert RotationCalculator.new
   end
@@ -56,5 +55,4 @@ class RotationCalculatorTest < Minitest::Test
     assert_equal 65, rotation_calc.rotation('98765')[:d]
     assert_equal 89, rotation_calc.rotation('56789')[:d]
   end
-
 end
