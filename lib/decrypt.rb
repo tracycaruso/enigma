@@ -1,37 +1,35 @@
 require_relative 'key_generator'
 require_relative 'date_generator'
 require_relative 'rotator'
-require_relative 'enigma'
+require_relative 'cipher'
+require_relative 'messages'
 
 class Decrypt
-  attr_reader :target_filename, :key, :date, :enigma, :decrypted_message
+  attr_reader :output_messages, :messages, :target_file, :key, :date, :cipher, :decrypted_message
 
-  def initialize(message_filename, target_filename, key, date)
-    @message_filename  = message_filename
-    @target_filename   = target_filename
+  def initialize(message_file, target_file, key, date)
+    @output_messages   = Messages.new
+    @message_file      = message_file
+    @target_file       = target_file
     @key               = key
     @date              = date
-    message            = File.open(@message_filename, "r"){ |file| file.read }.chomp.to_s
+    message            = File.open(@message_file, "r"){ |file| file.read }.chomp.to_s
     rotator            = Rotator.new(key, date)
-    @enigma            = Enigma.new(message, rotator)
+    @cipher            = Cipher.new(message, rotator)
   end
 
   def decrypt_message
-    @decrypted_message = enigma.decrypt
+    @decrypted_message = cipher.decrypt
   end
 
   def write_file
-    File.open(target_filename, "w"){ |file| file.puts decrypted_message}
+    File.open(target_file, "w"){ |file| file.puts decrypted_message}
   end
 
   def success_message
-    "Created '#{target_filename}' with the key #{key} and date #{validate_date}"
+    output_messages.success(target_file, key, date)
   end
 
-  # private
-  def validate_date
-    date.to_i < 100000 ? date.to_s.rjust(6,"0") : date
-  end
 end
 
 

@@ -1,6 +1,6 @@
 require_relative './rotator.rb'
 
-class Enigma
+class Cipher
   attr_reader :message, :rotator, :chars, :number_of_chars, :lines
 
   def initialize(message, rotator)

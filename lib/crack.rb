@@ -1,43 +1,45 @@
-require_relative 'date_generator'
 require_relative 'rotator'
-require_relative 'enigma'
+require_relative 'cipher'
+require_relative 'messages'
 
 class Crack
-  attr_reader :message_filename, :target_filename, :date, :message, :decrypted_message, :key
+  attr_reader :output_messages, :target_file, :date, :message_file, :modified_message, :key
 
-  def initialize(message_filename, target_filename, date)
-    @message_filename  = message_filename
-    @target_filename   = target_filename
-    @date              = date
-    @message           = File.open(message_filename, "r"){ |file| file.read }.chomp.to_s
-    @matching_phrase   = "..end.."
-    @decrypted_message = ""
-    @key = 0
+  def initialize(message_file, target_file, date)
+    @output_messages   =  Messages.new
+    @target_file       =  target_file
+    @date              =  date
+    @message_file      =  message_file
+    @modified_message  =  ""
+    @key               =  0
   end
 
   def crack_file
-    until valid_decrypted_message?
-      rotator            = Rotator.new(@key, date)
-      decrypt            = Enigma.new(message, rotator)
-      @decrypted_message = enigma.decrypt
+    until confirmed_decrypted?
+      rotator            =  Rotator.new(@key, date)
+      cipher             =  Cipher.new(read_file, rotator)
+      @modified_message  =  cipher.decrypt
       @key += 1
     end
   end
 
   def write_file
-    File.open(target_filename, "w"){ |file| file.puts decrypted_message}
+    File.open(target_file, "w"){ |file| file.puts modified_message}
   end
 
   def success_message
-    "Created '#{target_filename}' with the key #{key-1} and date #{date}"
+    output_messages.success(target_file, key-1, date)
   end
 
   private
-
-  def valid_decrypted_message?
-    @decrypted_message[-7..-1] == @matching_phrase
+  def confirmed_decrypted?
+    matching_phrase   =  "..end.."
+    modified_message[-7..-1] == matching_phrase
   end
 
+  def read_file
+    File.open(message_file, "r"){ |file| file.read }.chomp.to_s
+  end
 
 end
 
