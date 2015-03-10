@@ -18,4 +18,18 @@ class EnigmaTest < Minitest::Test
     enigma = Enigma.new("lsr3", rotator)
     assert_equal "abcd", enigma.decrypt
   end
+
+  # def test_it_rotates_a_position_forward_50_remainder_39_equals_11_chars
+  #   skip
+  #   rotator = Rotator.new(41521, 20315)
+  #   enigma = Enigma.new("lsr3", rotator)
+  #   assert_equal 11, enigma.rotate_forward('a', 0)
+  # end
+  #
+  # def test_it_rotates_a_position_backwards_28_chars
+  #   skip
+  #   rotator = Rotator.new(41521, 20315)
+  #   enigma = Enigma.new("lsr3", rotator)
+  #   assert_equal 28, enigma.rotate_backward('a', 0)
+  # end
 end

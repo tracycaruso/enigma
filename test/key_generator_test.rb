@@ -8,7 +8,7 @@ class KeyGeneratorTest < Minitest::Test
 
   def test_genertated_key_is_five_characters_long
     key = KeyGenerator.new
-    assert_equal 5, key.generate_key.to_s.length
+    assert_equal 5, key.generate_key.length
   end
 
   def test_it_generates_a_random_key
@@ -17,8 +17,15 @@ class KeyGeneratorTest < Minitest::Test
     assert_equal keys.length, keys.uniq.length
   end
 
-  def test_that_key_is_a_fixnum
+  def test_that_key_is_an_array
     key = KeyGenerator.new
-    assert_instance_of Fixnum, key.generate_key
+    assert_instance_of Array, key.generate_key
+  end
+
+  def test_it_can_start_with_zero
+    key = KeyGenerator.new
+    keys = 1000.times.map { key.generate_key }
+    start_with_zero = keys.find_all{|key| key.first == "0"}
+    assert start_with_zero.length > 1
   end
 end

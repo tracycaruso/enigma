@@ -25,13 +25,19 @@ class Decrypt
   end
 
   def success_message
-    puts "Created '#{target_filename}' with the key #{key} and date #{date}"
+    "Created '#{target_filename}' with the key #{key} and date #{date_check}"
+  end
+
+  private
+  def date_check
+    date < 100000 ? date.to_s.rjust(6,"0") : date
   end
 end
+
 
 if __FILE__ == $0
   decrypt = Decrypt.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
   decrypt.decrypt_message
   decrypt.write_file
-  decrypt.success_message
+  puts decrypt.success_message
 end

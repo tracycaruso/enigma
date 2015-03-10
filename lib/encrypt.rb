@@ -25,7 +25,12 @@ class Encrypt
   end
 
   def success_message
-    puts "Created '#{message_filename}' with the key #{key} and date #{date}"
+    "Created '#{message_filename}' with the key #{key} and date #{date_check}"
+  end
+
+  private
+  def date_check
+    date < 100000 ? date.to_s.rjust(6,"0") : date
   end
 end
 
@@ -34,5 +39,5 @@ if __FILE__ == $0
   encrypt = Encrypt.new(ARGV[0], ARGV[1])
   encrypt.encrypt_message
   encrypt.write_file
-  encrypt.success_message
+  puts  encrypt.success_message
 end

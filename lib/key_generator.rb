@@ -1,5 +1,5 @@
 class KeyGenerator
   def generate_key
-    rand(0..9.0).to_s.slice(3..7).to_i
+    rand(0..9.0).to_s.slice(3..7).chars
   end
 end
