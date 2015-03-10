@@ -1,43 +1,38 @@
-require_relative './rotator.rb'
-class Encryptor
+require_relative 'date_generator'
+require_relative 'rotator'
+require_relative 'enigma'
 
-  # attr_reader :input
-  #
-  # def initialize
-  #   @rotation_value = Rotator.new.total_rotation_values
-  #   @chars =   [*("a".."z"), *("0".."9"), " ", ".", ","]
-  # end
-  #
-  # def encryptor(input)
-  #   input.each_index do |i|
-  #     case
-  #     when i % 4 == 0 then input[i] = @chars[(@chars.index(input[i]) + @rotation_value[:a]) % 39]
-  #     when i % 4 == 1 then input[i] = @chars[(@chars.index(input[i]) + @rotation_value[:b]) % 39]
-  #     when i % 2 == 0 then input[i] = @chars[(@chars.index(input[i]) + @rotation_value[:c]) % 39]
-  #     when i % 2 == 1 then input[i] = @chars[(@chars.index(input[i]) + @rotation_value[:d]) % 39]
-  #     end
-  #   end
-  # end
+class Cracker
+  attr_reader :message_filename, :target_filename, :date, :message, :decrypted_message, :key
+  def initialize(message_filename, target_filename, date)
+    @message_filename  = message_filename
+    @target_filename   = target_filename
+    @date              = date
+    @message           = File.open(message_filename, "r"){ |file| file.read }.chomp.to_s
+  end
 
-  # Get length of string
-  # if string length ends in .0 last four digits are ABCD rotations
-  # if string length ends in .25 last four digits arE BCDA rotations
-  # if string length ends in .50 last four digits are CDAB rotations
-  # if string length ends in .75 last four digits are DABC rotations
+  def crack
+    @key = 0
+    until @decrypted_message.to_s[-4..-1] == "nd.."
+      rotator            = Rotator.new(@key.to_i, date.to_i)
+      enigma             = Enigma.new(message, rotator)
+      @decrypted_message = enigma.decrypt
+      @key += 1
+    end
+  end
 
-  # 4th last digit and find its index in char array then subtract from .
+  def write_file
+    File.open(target_filename, "w"){ |file| file.puts decrypted_message}
+  end
 
-  # chs = find index of last four characters
-  # starts = find index of last four nd..
-
-  # subtract chs from starts index ex  starts - chs if chs is lower than starts + 39 to number
-  # match numbers to abcd values
-  # add abcd values to time offsets
-  # generate number
-  
-
+  def success_message
+    puts "Created '#{target_filename}' with the key #{key-1} and date #{date}"
+  end
 end
 
-
-tester = Encryptor.new
-print tester.encryptor(["u", "0", "e", "p", "b", "y", "h", "g", "3", "l", " ", "k", " ", "x", "t", "8", "8", "y", "a", "l", "t", "c", "u", "n", "n", "y", "o", "8", "8", "h", "r", "s", "9", "n", "n", "w", "n", "d", ".", "c", "3", "i", ".", "9"])
+if __FILE__ == $0
+  crack = Cracker.new(ARGV[0], ARGV[1], ARGV[2])
+  crack.crack
+  crack.write_file
+  crack.success_message
+end

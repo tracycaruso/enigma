@@ -5,9 +5,10 @@ require_relative 'enigma'
 
 class Encrypt
   attr_reader :message_filename, :target_filename, :key, :date, :enigma, :encrypted_message
-  def initialize
-    @message_filename  = ARGV[0]
-    @target_filename   = ARGV[1]
+
+  def initialize(message_filename, target_filename)
+    @message_filename  = message_filename
+    @target_filename   = target_filename
     message            = File.open(message_filename, "r"){ |file| file.read }.chomp.to_s
     @key               = KeyGenerator.new.generate_key
     @date              = DateGenerator.new.generate_date
@@ -28,7 +29,10 @@ class Encrypt
   end
 end
 
-# encrypt = Encrypt.new
-# encrypt.encrypt_message
-# encrypt.write_file
-# encrypt.success_message
+
+if __FILE__ == $0
+  encrypt = Encrypt.new(ARGV[0], ARGV[1])
+  encrypt.encrypt_message
+  encrypt.write_file
+  encrypt.success_message
+end
