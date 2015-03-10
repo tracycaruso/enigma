@@ -12,7 +12,7 @@ class Decrypt
     @key               = key
     @date              = date
     message            = File.open(@message_filename, "r"){ |file| file.read }.chomp.to_s
-    rotator            = Rotator.new(key.to_i, date.to_i)
+    rotator            = Rotator.new(key, date)
     @enigma            = Enigma.new(message, rotator)
   end
 
@@ -25,12 +25,12 @@ class Decrypt
   end
 
   def success_message
-    "Created '#{target_filename}' with the key #{key} and date #{date_check}"
+    "Created '#{target_filename}' with the key #{key} and date #{validate_date}"
   end
 
-  private
-  def date_check
-    date < 100000 ? date.to_s.rjust(6,"0") : date
+  # private
+  def validate_date
+    date.to_i < 100000 ? date.to_s.rjust(6,"0") : date
   end
 end
 

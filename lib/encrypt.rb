@@ -9,10 +9,10 @@ class Encrypt
   def initialize(message_filename, target_filename)
     @message_filename  = message_filename
     @target_filename   = target_filename
-    message            = File.open(message_filename, "r"){ |file| file.read }.chomp.to_s
     @key               = KeyGenerator.new.generate_key
     @date              = DateGenerator.new.generate_date
-    rotator            = Rotator.new(key.to_i, date.to_i)
+    rotator            = Rotator.new(key, date)
+    message            = File.open(message_filename, "r"){ |file| file.read }.chomp.to_s
     @enigma            = Enigma.new(message, rotator)
   end
 
@@ -25,11 +25,11 @@ class Encrypt
   end
 
   def success_message
-    "Created '#{message_filename}' with the key #{key} and date #{date_check}"
+    "Created '#{message_filename}' with the key #{key} and date #{validate_date}"
   end
 
   private
-  def date_check
+  def validate_date
     date < 100000 ? date.to_s.rjust(6,"0") : date
   end
 end

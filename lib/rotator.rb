@@ -8,7 +8,7 @@ class Rotator
     @key       = key
     @date      = date
     @rotations = RotationCalculator.new.rotation(@key.to_s)
-    @offsets   = OffsetCalculator.new(@date).offsets
+    @offsets   = OffsetCalculator.new(@date.to_i).offsets
   end
 
   def total_rotation_values

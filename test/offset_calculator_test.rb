@@ -21,6 +21,11 @@ class OffsetCalculatorTest < Minitest::Test
     assert_equal [4,2,2,5], offset_calculator.offset_generator
   end
 
+  def test_offset_generator_returns_offsets_for_6_digit_date_with_leading_zero
+    offset_calculator = OffsetCalculator.new(30815)
+    assert_equal [4,2,2,5], offset_calculator.offset_generator
+  end
+
   def test_it_returns_hash_of_offsets
     offset_calculator = OffsetCalculator.new(122086)
     result =  {:a=>1, :b=>3, :c=>9, :d=>6}

@@ -13,7 +13,7 @@ class RotationCalculatorTest < Minitest::Test
 
   def test_rotation_returns_a_hash
     rotation_calc = RotationCalculator.new
-    assert_equal Hash, rotation_calc.rotation('12345').class
+    assert_instance_of Hash, rotation_calc.rotation('12345')
   end
 
   def test_rotation_returns_rotation_keys
